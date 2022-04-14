@@ -28,6 +28,7 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.2.0"
 
+    implementation "org.java-websocket:Java-WebSocket:1.4.0"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.2'
