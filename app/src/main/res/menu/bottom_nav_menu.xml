@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/content"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="content" />
+
+    <item
+        android:id="@+id/socialTouch"
+        android:icon="@drawable/ic_chat_black_24dp"
+        android:title="socialTouch" />
+
+    <item
+        android:id="@+id/exercise"
+        android:icon="@drawable/ic_pageview_black_24dp"
+        android:title="exercise" />
+
+    <item
+        android:id="@+id/userCenter"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="userCenter" />
+
+
+</menu>

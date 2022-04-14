@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.soulaid">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".user.ui.society.chats.ChatActivity"></activity>
+        <activity android:name=".user.ui.society.moments.MomentAddActivity" />
+        <activity android:name=".user.ui.society.moments.MomentDetailActivity" />
+        <activity android:name=".admin.AdminIndexActivity" />
+        <activity android:name=".user.ui.center.PwdChangeActivity" />
+        <activity
+            android:name=".user.ui.center.UserFavoriteActivity"
+            android:parentActivityName=".user.UserIndexActivity" />
+        <activity
+            android:name=".user.ui.center.UserMessageActivity"
+            android:parentActivityName=".user.UserIndexActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="登录界面"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".RegisterActivity"
+            android:label="注册界面"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".user.UserIndexActivity"
+            android:label="@string/title_activity_bottom_navigation" />
+        <activity
+            android:name=".ArticleDetailActivity"
+            android:parentActivityName=".user.UserIndexActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
