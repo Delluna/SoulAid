@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBUtil {
 
-    private String ip="192.168.0.103";
+    private String ip="192.168.101.28";
     private String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private String dbURL = "jdbc:jtds:sqlserver://"+ip+":1433;DatabaseName=DB_SOULAID";//数据库连接url
     private String dbName = "SoulAid";//数据库用户名

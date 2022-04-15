@@ -199,4 +199,43 @@ public class MessageDao {
 
         return teachers;
     }
+    public List<UserMessage> getUsers(String tname){
+
+        List<UserMessage> users=new ArrayList<>();
+
+        String sql = "select * from user_message where username in (select uname from chat_messages where tname = ?)";
+
+        DBUtil dbUtil = new DBUtil();
+        Connection connection = dbUtil.getCon();
+        UserMessage user;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,tname);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(!resultSet.next())
+                return users;
+            else {
+                user=new UserMessage();
+                user.setId(resultSet.getInt(1));
+                user.setUsername(resultSet.getString(2));
+                user.setPassword(resultSet.getString(3));
+                users.add(user);
+            }
+            while (resultSet.next()) {
+                user=new UserMessage();
+                user.setId(resultSet.getInt(1));
+                user.setUsername(resultSet.getString(2));
+                user.setPassword(resultSet.getString(3));
+                users.add(user);
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbUtil.closeCon();
+        }
+
+        return users;
+    }
 }

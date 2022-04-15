@@ -16,20 +16,22 @@ import android.view.ViewGroup;
 
 import com.example.soulaid.R;
 import com.example.soulaid.adapter.ChatsApater;
-import com.example.soulaid.adapter.MomentsAdapter;
 import com.example.soulaid.dao.MessageDao;
-import com.example.soulaid.entity.MomentDetail;
 import com.example.soulaid.entity.TeacherMessage;
+import com.example.soulaid.entity.UserMessage;
+import com.example.soulaid.util.IOUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ChatsFragment extends Fragment {
+    private String userType;
     private View view;
     private RecyclerView recyclerView;
 
     private List<TeacherMessage> teachers;
+    private List<UserMessage> users;
 
     private ChatsApater adapter;
 
@@ -43,7 +45,14 @@ public class ChatsFragment extends Fragment {
     }
 
     private void init() {
-        getTeachers();
+        userType= IOUtil.getUserType(getContext());
+        if(userType.equals("user")){
+            getTeachers();
+        }else{
+            //userType.equals("teacher")
+            getUsers();
+        }
+
         recyclerView = view.findViewById(R.id.recycleView);
     }
 
@@ -63,24 +72,48 @@ public class ChatsFragment extends Fragment {
         }).start();
     }
 
+    //获取所有与该老师聊过天的学生列表
+    private void getUsers() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MessageDao messageDao = new MessageDao();
+                List<UserMessage> users = messageDao.getUsers(IOUtil.getUserInfo(getContext())[0]);
+
+                //todo:可能会有users为空的情况，即该老师尚未与学生聊过天
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("users", (ArrayList<? extends UserMessage>) users);
+                Message message = Message.obtain();
+                message.setData(bundle);
+                message.what = 2;
+                handler.sendMessage(message);
+            }
+        }).start();
+    }
+
     @SuppressLint("HandlerLeak")
     final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
             super.handleMessage(message);
+
+            LinearLayoutManager manager = new LinearLayoutManager(getContext());
+            manager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(manager);
             switch (message.what) {
+                //userType为学生，获取教师列表
                 case 1:
                     teachers = message.getData().getParcelableArrayList("teachers");
-
-                    LinearLayoutManager manager = new LinearLayoutManager(getContext());
-                    manager.setOrientation(LinearLayoutManager.VERTICAL);
-
-                    recyclerView.setLayoutManager(manager);
-                    adapter = new ChatsApater(getContext(), teachers);
-                    recyclerView.setAdapter(adapter);
+                    adapter = new ChatsApater(getContext(), teachers,userType);
+                    break;
+                    //userType为教师，获取学生列表
+                case 2:
+                    users = message.getData().getParcelableArrayList("users");
+                    adapter = new ChatsApater(getContext(), users);
                     break;
             }
+            recyclerView.setAdapter(adapter);
         }
     };
-
 }

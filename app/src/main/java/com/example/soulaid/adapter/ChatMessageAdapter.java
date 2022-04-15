@@ -12,21 +12,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.soulaid.R;
 import com.example.soulaid.entity.ChatMessage;
+import com.example.soulaid.util.IOUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatMessageAdapter extends RecyclerView.Adapter {
+    private String userType;
 
     public static final int TYPE_SEND = 1;
     public static final int TYPE_RECEIVE = 0;
 
     private Context context;
-    private List<ChatMessage> messages=new ArrayList<>();
+    private List<ChatMessage> messages = new ArrayList<>();
 
-    public ChatMessageAdapter(Context context,List<ChatMessage> messages){
-        this.context=context;
-        this.messages=messages;
+    public ChatMessageAdapter(Context context, List<ChatMessage> messages) {
+        userType = IOUtil.getUserType(context);
+        this.context = context;
+        this.messages = messages;
     }
 
     public static class ItemHolder extends RecyclerView.ViewHolder {
@@ -39,24 +42,23 @@ public class ChatMessageAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public int getItemViewType(int position){
+    public int getItemViewType(int position) {
         return messages.get(position).getType();
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(viewType==TYPE_SEND){
+        if (viewType == TYPE_SEND) {
             return new ItemHolder(LayoutInflater.from(this.context).inflate(R.layout.item_message_send, parent, false));
-        }else {
+        } else {
             return new ItemHolder(LayoutInflater.from(this.context).inflate(R.layout.item_message_receive, parent, false));
         }
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((ItemHolder)holder).msg.setText(messages.get(position).getMessage());
+        ((ItemHolder) holder).msg.setText(messages.get(position).getMessage());
     }
 
     @Override

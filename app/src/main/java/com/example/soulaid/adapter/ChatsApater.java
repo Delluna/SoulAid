@@ -14,13 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.soulaid.R;
 import com.example.soulaid.entity.TeacherMessage;
+import com.example.soulaid.entity.UserMessage;
 import com.example.soulaid.user.ui.society.chats.ChatActivity;
+import com.example.soulaid.util.IOUtil;
 
 import java.util.List;
 
 public class ChatsApater extends RecyclerView.Adapter {
+    private String userType;
     private Context context;
     private List<TeacherMessage> teachers;
+    private List<UserMessage> users;
 
     public static class ItemHolder extends RecyclerView.ViewHolder{
         public ImageView icon;
@@ -33,9 +37,16 @@ public class ChatsApater extends RecyclerView.Adapter {
         }
     }
 
-    public ChatsApater(Context context, List<TeacherMessage> teachers){
+    public ChatsApater(Context context, List<TeacherMessage> teachers,String userType){
+        this.userType=userType;
         this.context=context;
         this.teachers=teachers;
+    }
+
+    public ChatsApater(Context context, List<UserMessage> users){
+        userType= IOUtil.getUserType(context);
+        this.context=context;
+        this.users=users;
     }
     @NonNull
     @Override
@@ -45,7 +56,11 @@ public class ChatsApater extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((ItemHolder)holder).name.setText(teachers.get(position).getUsername());
+        if(userType.equals("user")) {
+            ((ItemHolder) holder).name.setText(teachers.get(position).getUsername());
+        }else {
+            ((ItemHolder) holder).name.setText(users.get(position).getUsername());
+        }
 
         //设置点击事件
         ((ItemHolder)holder).itemView.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +68,12 @@ public class ChatsApater extends RecyclerView.Adapter {
             public void onClick(View view) {
                 Intent intent =new Intent(context, ChatActivity.class);
                 Bundle bundle=new Bundle();
-                bundle.putSerializable("teacher",teachers.get(position));
+                if(userType.equals("user")){
+                    bundle.putSerializable("teacher",teachers.get(position));
+                }else {
+                    bundle.putSerializable("user",users.get(position));
+                }
+
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }
@@ -62,6 +82,11 @@ public class ChatsApater extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return teachers.size();
+        if (userType.equals("user")){
+            return teachers.size();
+        }else {
+            return users.size();
+        }
+
     }
 }
