@@ -29,10 +29,10 @@
 
             <ImageView
                 android:id="@+id/img_exit"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/ic_title_back" />
+                android:background="@drawable/ic_title_back"/>
 
         </RelativeLayout>
 

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_margin="@dimen/layout_margin"
     android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
@@ -16,17 +17,19 @@
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/imageView_home"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_account_circle_black_24dp">
+                android:src="@drawable/ic_head_default">
             </ImageView>
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="20sp"
+                android:padding="@dimen/layout_margin"
+                android:textSize="15sp"
                 android:textColor="@color/colorBlack"
                 android:text="@string/text_usr_name">
             </TextView>
@@ -42,7 +45,8 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
+                android:layout_margin="@dimen/layout_margin"
+                android:textSize="20sp"
                 android:textColor="@color/colorBlack"
                 android:text="@string/text_home_title"
                 android:maxLines="1"
@@ -52,13 +56,14 @@
             </TextView>
             <TextView
                 android:id="@+id/content"
+                android:layout_margin="@dimen/layout_margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:textColor="@color/colorBlack"
                 android:text="@string/text_home_content"
-                android:maxLines="4"
+                android:maxLines="2"
                 android:ellipsize="end">
 
             </TextView>
@@ -68,36 +73,35 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:padding="5dp">
 
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/bg_usrname"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="Time"
             android:textColor="@color/colorGainsboro"
-            android:textSize="15sp"></TextView>
+            android:textSize="12sp"></TextView>
 
-        <Button
-            android:id="@+id/button"
+        <ImageView
+            android:id="@+id/like"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="点赞"
-            android:textColor="@color/colorBlack"
-            android:textSize="15sp"></Button>
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/likedCount"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_heart_outline"
+            android:layout_marginRight="@dimen/layout_margin"></ImageView>
         <TextView
             android:id="@+id/likedCount"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
             android:text="点赞数"></TextView>
 
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

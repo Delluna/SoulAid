@@ -3,13 +3,14 @@ package com.example.soulaid.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter {
     public static class ItemHolder extends RecyclerView.ViewHolder {
         public TextView name, title, content, time;
         public boolean isFavorited = false;
-        public Button favorite;
+        public ImageView favorite;
 
         public ItemHolder(@NonNull View itemView) {
             super(itemView);
@@ -45,7 +46,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter {
             title = itemView.findViewById(R.id.title);
             content = itemView.findViewById(R.id.content);
             time = itemView.findViewById(R.id.time);
-            favorite = itemView.findViewById(R.id.btn_favorite);
+            favorite = itemView.findViewById(R.id.img_favorite);
         }
     }
 
@@ -94,7 +95,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter {
                 ((ItemHolder)holder).title.setText("标题");
                 ((ItemHolder)holder).content.setText("内容");
                 ((ItemHolder)holder).time.setText("发布时间");
-                ((ItemHolder)holder).favorite.setText("收藏");
 
             } else {
 
@@ -108,9 +108,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter {
                 ((ItemHolder)holder).isFavorited = articleDetail.getIsFavorited();
 
                 if ( ((ItemHolder)holder).isFavorited == true) {
-                    ((ItemHolder)holder).favorite.setText("取消收藏");
-                } else {
-                    ((ItemHolder)holder).favorite.setText("收藏");
+                    Drawable background =context.getDrawable(R.drawable.ic_star);
+                    ((ItemHolder)holder).favorite.setBackground(background);
                 }
 
                 final boolean isFavorited=((ItemHolder)holder).isFavorited;

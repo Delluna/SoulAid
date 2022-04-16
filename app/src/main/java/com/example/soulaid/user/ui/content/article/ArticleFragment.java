@@ -19,6 +19,7 @@ import com.example.soulaid.R;
 import com.example.soulaid.dao.ArticlesDao;
 import com.example.soulaid.entity.ArticleDetail;
 import com.example.soulaid.adapter.ArticlesAdapter;
+import com.youth.banner.Banner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class ArticleFragment extends Fragment{
     private View view;
 
     private ArticlesAdapter adapter;
+
 
     //private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;

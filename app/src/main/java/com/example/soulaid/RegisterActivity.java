@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,9 @@ public class RegisterActivity extends AppCompatActivity implements RadioGroup.On
     private TextView username, password, password2;
     private Button register;
     private RadioGroup radioGroup;
+    private View titlebar;
+    private TextView titlename;
+    private ImageView exit;
     private String tableName;
 
     @Override
@@ -34,9 +38,14 @@ public class RegisterActivity extends AppCompatActivity implements RadioGroup.On
         password2 = findViewById(R.id.editText3);
         register = findViewById(R.id.Register);
         radioGroup = findViewById(R.id.group);
+        titlebar = findViewById(R.id.titlebar);
+        titlename = titlebar.findViewById(R.id.name);
+        titlename.setText("用户注册");
+        exit = titlebar.findViewById(R.id.img_exit);
 
         radioGroup.setOnCheckedChangeListener(this);
         register.setOnClickListener(this);
+        exit.setOnClickListener(this);
     }
 
     @Override
@@ -56,19 +65,26 @@ public class RegisterActivity extends AppCompatActivity implements RadioGroup.On
 
     @Override
     public void onClick(View view) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String name, pwd, pwd2;
-                name = username.getText().toString();
-                pwd = password.getText().toString();
-                pwd2 = password2.getText().toString();
+        switch (view.getId()) {
+            case R.id.Register:
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String name, pwd, pwd2;
+                        name = username.getText().toString();
+                        pwd = password.getText().toString();
+                        pwd2 = password2.getText().toString();
 
-                MessageDao MessageDao = new MessageDao();
-                int state = MessageDao.register(tableName, name, pwd, pwd2);
-                handler.sendEmptyMessage(state);
-            }
-        }).start();
+                        MessageDao MessageDao = new MessageDao();
+                        int state = MessageDao.register(tableName, name, pwd, pwd2);
+                        handler.sendEmptyMessage(state);
+                    }
+                }).start();
+                break;
+            case R.id.img_exit:
+                finish();
+                break;
+        }
     }
 
     @SuppressLint("HandlerLeak")
@@ -87,6 +103,4 @@ public class RegisterActivity extends AppCompatActivity implements RadioGroup.On
             }
         }
     };
-
-
 }

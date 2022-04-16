@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +19,7 @@ import com.example.soulaid.util.IOUtil;
 public class ArticleDetailActivity extends AppCompatActivity {
     private Intent intent;
     private TextView name,title,content,time;
-    private Button favorite;
+    private ImageView favorite;
     private String username;
 
     @Override
@@ -35,7 +36,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
         title=findViewById(R.id.title);
         content=findViewById(R.id.content);
         time=findViewById(R.id.time);
-        favorite=findViewById(R.id.favorite);
+        favorite=findViewById(R.id.img_favorite);
 
         name.setText(intent.getStringExtra("name"));
         title.setText(intent.getStringExtra("title"));

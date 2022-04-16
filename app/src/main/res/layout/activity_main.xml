@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
@@ -11,10 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="20dp">
+        android:padding="20dp">
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:src="@drawable/app_logo_background"></ImageView>
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="450dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textColor="@color/colorBlack"
             android:textSize="30sp"
@@ -27,14 +33,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="200dp">
 
             <Button
                 android:id="@+id/btn_loginssss"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_usrname"
                 android:text="登录"
                 android:textSize="20sp" />
 
@@ -43,7 +48,6 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_usrname"
                 android:layout_marginLeft="10dp"
                 android:text="注册"
                 android:textSize="20sp" />

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <LinearLayout
@@ -22,7 +23,7 @@
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_account_circle_black_24dp"></ImageView>
+                android:src="@drawable/ic_head_default"></ImageView>
 
 
             <LinearLayout
@@ -46,7 +47,6 @@
 
                 <Button
                     android:id="@+id/btn_detail"
-                    android:background="@drawable/bg_usrname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
@@ -70,34 +70,31 @@
                 android:id="@+id/btn_change_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/layout_margin"
                 android:gravity="fill_vertical"
-                android:padding="10dp"
+                android:padding="@dimen/layout_margin"
                 android:text="修改密码"
-                android:textSize="20sp"></Button>
+                android:textSize="15sp"></Button>
 
             <Button
                 android:id="@+id/btn_favorite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/layout_margin"
                 android:gravity="fill_vertical"
-                android:padding="10dp"
+                android:padding="@dimen/layout_margin"
                 android:text="收藏"
-                android:textSize="20sp"></Button>
+                android:textSize="15sp"></Button>
 
             <Button
                 android:id="@+id/btn_exit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@color/colorWhite"
+                android:layout_marginTop="@dimen/layout_margin"
                 android:gravity="fill_vertical"
-                android:padding="10dp"
+                android:padding="@dimen/layout_margin"
                 android:text="退出"
-                android:textSize="20sp"></Button>
+                android:textSize="15sp"></Button>
 
         </LinearLayout>
 

@@ -30,6 +30,8 @@ dependencies {
 
     implementation "org.java-websocket:Java-WebSocket:1.4.0"
 
+    implementation 'com.youth.banner:banner:2.1.0'
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

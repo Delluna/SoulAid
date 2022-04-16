@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
@@ -14,8 +15,26 @@
             android:id="@+id/img_userlogo"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_account_circle_black_24dp">
+            android:layout_margin="@dimen/layout_margin"
+            android:src="@drawable/ic_head_default">
         </ImageView>
+
+        <ImageView
+            android:id="@+id/img_search"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="@dimen/layout_margin"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_magnify">
+        </ImageView>
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/layout_margin"
+            android:hint="输入查询关键字"
+            android:textSize="13dp"
+            ></EditText>
 
     </LinearLayout>
 
@@ -28,9 +47,9 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/nav_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground"
+            android:layout_height="40dp"
             android:layout_gravity="top"
+            android:background="@color/colorWhite"
             app:menu="@menu/content_nav_menu" />
 
         <FrameLayout

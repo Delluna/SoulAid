@@ -13,7 +13,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.soulaid.admin.AdminIndexActivity;
@@ -26,6 +28,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText username, password;
     private Button login;
     private RadioGroup radioGroup;
+    private View titlebar;
+    private TextView titlename;
+    private ImageView exit;
     public String str_username, str_password, type;
     private String tableName;
 
@@ -43,9 +48,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         password = findViewById(R.id.editText2);
         login = findViewById(R.id.button);
         radioGroup = findViewById(R.id.group);
+        titlebar=findViewById(R.id.titlebar);
+        titlename=titlebar.findViewById(R.id.name);
+        titlename.setText("用户登录");
+        exit=titlebar.findViewById(R.id.img_exit);
 
         login.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
+        exit.setOnClickListener(this);
     }
 
     @Override
@@ -86,6 +96,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         handler.sendEmptyMessage(msg);
                     }
                 }).start();
+                break;
+            case R.id.img_exit:
+                finish();
                 break;
         }
     }

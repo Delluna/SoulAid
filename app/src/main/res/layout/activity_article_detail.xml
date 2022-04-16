@@ -11,22 +11,29 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="40dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imageView_home_detail"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_centerVertical="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_account_circle_black_24dp"></ImageView>
+            android:src="@drawable/ic_head_default"></ImageView>
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imageView_home_detail"
+            android:layout_marginLeft="20dp"
             android:text="发布者"
             android:textColor="@color/colorBlack"
             android:textSize="20sp"></TextView>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/title"
@@ -46,23 +53,27 @@
             android:textColor="@color/colorBlack"
             android:textSize="20sp"></TextView>
 
-        <TextView
-            android:id="@+id/time"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="left"
-            android:text="Time:xxxx-xx-xx xx:xx:xx"
-            android:textColor="@color/colorGainsboro"
-            android:textSize="20sp"></TextView>
+            android:padding="5dp">
 
-        <Button
-            android:id="@+id/favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:text="@string/button_favorite"
-            android:textColor="@color/colorBlack"
-            android:textSize="20sp"></Button>
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Time:xxxx-xx-xx xx:xx:xx"
+                android:textColor="@color/colorGainsboro"
+                android:textSize="15sp"></TextView>
+
+            <ImageView
+                android:id="@+id/img_favorite"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/ic_star_outline"
+                android:gravity="center"></ImageView>
+        </RelativeLayout>
     </LinearLayout>
 </ScrollView>

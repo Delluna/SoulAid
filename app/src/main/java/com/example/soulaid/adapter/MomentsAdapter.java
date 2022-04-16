@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,7 @@ public class MomentsAdapter extends RecyclerView.Adapter {
     public static class ItemHolder extends RecyclerView.ViewHolder {
         public int mid;//moment的id
         public TextView name, title, content, time,likedCount;
-        public Button button;
+        public ImageView like;
 
         public ItemHolder(@NonNull View itemView) {
             super(itemView);
@@ -46,7 +47,7 @@ public class MomentsAdapter extends RecyclerView.Adapter {
             content = itemView.findViewById(R.id.content);
             time = itemView.findViewById(R.id.time);
             likedCount=itemView.findViewById(R.id.likedCount);
-            button = itemView.findViewById(R.id.button);
+            like = itemView.findViewById(R.id.like);
         }
     }
 
@@ -102,7 +103,6 @@ public class MomentsAdapter extends RecyclerView.Adapter {
                 ((ItemHolder) holder).content.setText("内容");
                 ((ItemHolder) holder).time.setText("发布时间");
                 ((ItemHolder) holder).likedCount.setText("0");
-                ((ItemHolder) holder).button.setText("点赞");
             } else {
                 ((ItemHolder) holder).mid=contents.get(position).getId();
                 ((ItemHolder) holder).name.setText(contents.get(position).getUname());
@@ -110,10 +110,9 @@ public class MomentsAdapter extends RecyclerView.Adapter {
                 ((ItemHolder) holder).content.setText(contents.get(position).getContent());
                 ((ItemHolder) holder).time.setText(contents.get(position).getDatetime().toString());
                 ((ItemHolder) holder).likedCount.setText(Integer.toString(contents.get(position).getLiked()));
-                ((ItemHolder) holder).button.setText("点赞");
 
                 //为button设置点击事件,目前还无法实现取消点赞
-                ((ItemHolder) holder).button.setOnClickListener(new View.OnClickListener() {
+                ((ItemHolder) holder).like.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         new Thread(new Runnable() {

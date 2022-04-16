@@ -2,22 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/layout_margin">
 
     <Button
         android:id="@+id/issue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="发表评论">
+        android:text="感情分享"/>
 
-    </Button>
-
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:listSelector="@drawable/item_selector"></androidx.recyclerview.widget.RecyclerView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="@drawable/item_selector"
+        android:padding="@dimen/layout_margin"></androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>
