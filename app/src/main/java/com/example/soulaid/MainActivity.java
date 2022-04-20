@@ -21,21 +21,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //判断之前是否登陆过，若登陆过直接跳转到首页
         String type = IOUtil.getUserType(MainActivity.this);
         switch (type) {
-//            case "admin":
-//                Intent intent = new Intent(MainActivity.this, AdminIndexActivity.class);
-//                startActivity(intent);
-//                MainActivity.this.finish();
-//                break;
-//            case "teacher":
-//                Intent intent2 = new Intent(MainActivity.this, UserIndexActivity.class);
-//                startActivity(intent2);
-//                MainActivity.this.finish();
-//                break;
-//            case "user":
-//                Intent intent3 = new Intent(MainActivity.this, UserIndexActivity.class);
-//                startActivity(intent3);
-//                MainActivity.this.finish();
-//                break;
+            case "admin":
+                Intent intent = new Intent(MainActivity.this, AdminIndexActivity.class);
+                startActivity(intent);
+                MainActivity.this.finish();
+                break;
+            case "teacher":
+                Intent intent2 = new Intent(MainActivity.this, UserIndexActivity.class);
+                startActivity(intent2);
+                MainActivity.this.finish();
+                break;
+            case "user":
+                Intent intent3 = new Intent(MainActivity.this, UserIndexActivity.class);
+                startActivity(intent3);
+                MainActivity.this.finish();
+                break;
             default:
                 setContentView(R.layout.activity_main);
                 init();

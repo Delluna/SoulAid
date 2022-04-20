@@ -25,37 +25,19 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_head_default"></ImageView>
 
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:gravity="center"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:text="昵称"
+                android:textColor="@color/colorBlack"
+                android:textSize="25sp">
 
-                <TextView
-                    android:id="@+id/username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="昵称"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="25sp">
+            </TextView>
 
-                </TextView>
-
-                <Button
-                    android:id="@+id/btn_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="查看详细信息"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="25sp">
-                </Button>
-
-            </LinearLayout>
 
         </LinearLayout>
 
@@ -63,8 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:padding="20dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="20dp">
 
             <Button
                 android:id="@+id/btn_change_pwd"

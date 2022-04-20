@@ -29,8 +29,9 @@
 
             <ImageView
                 android:id="@+id/img_exit"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="@dimen/layout_margin"
                 android:layout_centerVertical="true"
                 android:background="@drawable/ic_title_back"/>
 

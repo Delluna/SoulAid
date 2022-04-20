@@ -1,5 +1,7 @@
 package com.example.soulaid.WebSocket;
 
+import com.example.soulaid.util.DBUtil;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
@@ -13,7 +15,7 @@ import org.java_websocket.handshake.ServerHandshake;
  */
 public class ChatClient extends WebSocketClient {
 
-    public static String uri="ws://192.168.101.28:8887";
+    public static String uri="ws://"+ DBUtil.ip +":8887";
     public static URI serverURI = URI.create(uri);
 
     public ChatClient(URI serverUri, Draft draft) {

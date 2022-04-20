@@ -12,9 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.widget.Button;
 
 import com.example.soulaid.R;
@@ -28,7 +32,9 @@ import java.util.List;
 
 public class MomentsFragment extends Fragment implements View.OnClickListener {
     private View view;
+
     private Button issue;
+
     private RecyclerView recyclerView;
 
     private int reTimes = 0;//更新次数
@@ -41,6 +47,7 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
                              ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_moments, container, false);
+
         init();
         return view;
     }
@@ -77,22 +84,28 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(getContext(), MomentAddActivity.class);
-        startActivityForResult(intent,1);
+        switch (view.getId()) {
+            case R.id.issue:
+                Intent intent = new Intent(getContext(), MomentAddActivity.class);
+                startActivityForResult(intent, 1);
+                break;
+        }
+
     }
 
     @Override
-    public void onActivityResult(int requestCode,int resultCode,Intent data){
-        if(data!=null){
-            Bundle bundle=data.getExtras();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null) {
+            Bundle bundle = data.getExtras();
             MomentDetail momentDetail = new MomentDetail();
 
             //添加数据 request==1 ,result==1
-            momentDetail=(MomentDetail) bundle.getSerializable("moment");
+            momentDetail = (MomentDetail) bundle.getSerializable("moment");
 
-            moments.add(0,momentDetail);
+            moments.add(0, momentDetail);
             adapter.notifyDataSetChanged();
         }
 

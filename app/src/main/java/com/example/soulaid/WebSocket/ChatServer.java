@@ -2,6 +2,7 @@ package com.example.soulaid.WebSocket;
 
 import com.example.soulaid.dao.ChatMessageDao;
 import com.example.soulaid.entity.ChatMessage;
+import com.example.soulaid.util.DBUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
