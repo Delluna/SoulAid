@@ -14,6 +14,7 @@ import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.soulaid.R;
 import com.example.soulaid.adapter.QuestionsAdapter;
@@ -93,9 +94,11 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
                     adapter=new QuestionsAdapter(ExerciseActivity.this,questions,answers);
                     recyclerView.setAdapter(adapter);
 
+                    recyclerView.setItemViewCacheSize(200);
+
                     //初始化
-                    for(int i=0;i<answers.size();i++){
-                        scores.add(0);
+                    for(int i=0;i<questions.size();i++){
+                        scores.add(-1);
                     }
                     break;
             }
@@ -108,8 +111,19 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
         //清空并初始化
         scores.clear();
-        for(int i=0;i<answers.size();i++){
-            scores.add(0);
+        for(int i=0;i<questions.size();i++){
+            scores.add(-1);
+        }
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        //清空并初始化
+        scores.clear();
+        for(int i=0;i<questions.size();i++){
+            scores.add(-1);
         }
     }
 
@@ -117,6 +131,13 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.finish:
+                for(int i=1;i<=questions.size();i++){
+                    if(((int)scores.get(i-1))==-1){
+                        Toast.makeText(ExerciseActivity.this,"第"+i+"个问题尚未填写",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
                 CalculateUtil calculateUtil=new CalculateUtil(scores);
                 int result=calculateUtil.calcuByName(scale.getName());
 

@@ -37,6 +37,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter {
             super(itemView);
             question = itemView.findViewById(R.id.question);
             answer = itemView.findViewById(R.id.recycleView);
+            answer.setItemViewCacheSize(200);
         }
     }
 

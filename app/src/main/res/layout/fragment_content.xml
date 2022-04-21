@@ -6,10 +6,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:focusable="true"
         android:focusableInTouchMode="true">
 
@@ -21,24 +20,28 @@
             android:src="@drawable/ic_head_default">
         </ImageView>
 
-        <ImageView
-            android:id="@+id/img_search"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="@dimen/layout_margin"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_magnify">
-        </ImageView>
         <EditText
             android:id="@+id/search"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/layout_margin"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/img_userlogo"
+            android:layout_marginLeft="@dimen/layout_margin"
             android:hint="输入查询关键字"
             android:textSize="13dp"
             ></EditText>
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/img_search"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/layout_margin"
+            android:src="@drawable/ic_magnify">
+        </ImageView>
+
+    </RelativeLayout>
 
     <LinearLayout
 

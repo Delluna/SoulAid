@@ -32,13 +32,8 @@ import java.util.List;
 
 public class MomentsFragment extends Fragment implements View.OnClickListener {
     private View view;
-
     private Button issue;
-
     private RecyclerView recyclerView;
-
-    private int reTimes = 0;//更新次数
-    private int number = 5;//每次更新moment的个数
     private List<MomentDetail> moments;
     private MomentsAdapter adapter;
 
@@ -98,16 +93,20 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data != null) {
-            Bundle bundle = data.getExtras();
-            MomentDetail momentDetail = new MomentDetail();
+        //对于MomentAddActivity页面
+        if(requestCode==1&&resultCode==1){
+            if (data != null) {
+                Bundle bundle = data.getExtras();
+                MomentDetail momentDetail = new MomentDetail();
 
-            //添加数据 request==1 ,result==1
-            momentDetail = (MomentDetail) bundle.getSerializable("moment");
+                //添加数据 request==1 ,result==1
+                momentDetail = (MomentDetail) bundle.getSerializable("moment");
 
-            moments.add(0, momentDetail);
-            adapter.notifyDataSetChanged();
+                moments.add(0, momentDetail);
+                adapter.notifyDataSetChanged();
+            }
         }
+
 
     }
 
@@ -116,7 +115,7 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void run() {
                 MomentsDao momentsDao = new MomentsDao();
-                moments = momentsDao.getMoments(number);
+                moments = momentsDao.getMoments();
                 Message message = Message.obtain();
                 if (moments == null) {
                     message.what = 0;

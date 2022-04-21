@@ -1,4 +1,4 @@
-package com.example.soulaid.user.ui.society.moments;
+package com.example.soulaid.user.ui.society.chats;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,32 +13,35 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.soulaid.R;
-import com.example.soulaid.dao.MomentsDao;
+import com.example.soulaid.dao.CommentsDao;
+import com.example.soulaid.entity.Comment;
 import com.example.soulaid.entity.MomentDetail;
 import com.example.soulaid.util.IOUtil;
 
-public class MomentAddActivity extends AppCompatActivity implements View.OnClickListener {
+public class CommentAddActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String username;
-    private TextView title,content;
+    private TextView content;
     private Button issue;
-    private MomentDetail momentDetail;
 
+    private MomentDetail momentDetail;
+    private Comment comment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_moment_add);
+        setContentView(R.layout.activity_comment_add);
         init();
     }
-
     private void init(){
-        username= IOUtil.getUserInfo(MomentAddActivity.this)[0];
-        title=findViewById(R.id.title);
+        username= IOUtil.getUserInfo(CommentAddActivity.this)[0];
         content=findViewById(R.id.content);
         issue=findViewById(R.id.issue);
 
-        momentDetail=new MomentDetail();
+        Intent intent=getIntent();
+        Bundle bundle =intent.getExtras();
+        momentDetail=(MomentDetail) bundle.getSerializable("momentDetail");
 
+        comment=new Comment();
         issue.setOnClickListener(this);
     }
 
@@ -48,13 +51,12 @@ public class MomentAddActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void run() {
                 String str_title,str_content;
-                str_title=title.getText().toString();
                 str_content=content.getText().toString();
-                MomentsDao momentsDao=new MomentsDao();
-                boolean state = momentsDao.addMoment(username,str_title,str_content);
+                CommentsDao commentsDao =new CommentsDao();
+                boolean state = commentsDao.addComment(username,momentDetail.getId(),str_content);
                 if(state){
                     handler.sendEmptyMessage(1);
-                    getLastMoment();
+                    getLastComment();
                 }else {
                     handler.sendEmptyMessage(0);
                 }
@@ -62,22 +64,20 @@ public class MomentAddActivity extends AppCompatActivity implements View.OnClick
         }).start();
     }
 
-    private void getLastMoment(){
+    private void getLastComment() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                MomentsDao momentsDao=new MomentsDao();
-                MomentDetail momentDetail=momentsDao.getLastMoment();
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("moment",momentDetail);
-                Message message=Message.obtain();
-                message.what=2;
+                CommentsDao commentsDao = new CommentsDao();
+                Comment comment = commentsDao.getLastComment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("comment", comment);
+                Message message = Message.obtain();
+                message.what = 2;
                 message.setData(bundle);
                 handler.sendMessage(message);
             }
         }).start();
-
-
     }
     @SuppressLint("HandlerLeak")
     final Handler handler = new Handler() {
@@ -86,11 +86,11 @@ public class MomentAddActivity extends AppCompatActivity implements View.OnClick
             super.handleMessage(message);
             switch (message.what) {
                 case 0:
-                    Toast.makeText(MomentAddActivity.this,"添加失败",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CommentAddActivity.this,"添加失败",Toast.LENGTH_SHORT).show();
 
                     break;
                 case 1:
-                    Toast.makeText(MomentAddActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CommentAddActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
                     break;
                 case 2:
                     Intent intent = new Intent();

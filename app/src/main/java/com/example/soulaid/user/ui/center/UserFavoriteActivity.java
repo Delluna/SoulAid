@@ -21,25 +21,32 @@ import java.util.List;
 
 public class UserFavoriteActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
     private String username;
+    private RecyclerView recyclerView;
 
-    private List<ArticleDetail> contents = new ArrayList<>();
+    private List<ArticleDetail> contents;
+    private ArticlesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_favorite);
         init();
-        getFavoriteContents();
     }
 
     void init() {
+        username = IOUtil.getUserInfo(UserFavoriteActivity.this)[0];
+
         recyclerView = findViewById(R.id.favorite);
+
         LinearLayoutManager manager = new LinearLayoutManager(UserFavoriteActivity.this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
-        username = IOUtil.getUserInfo(UserFavoriteActivity.this)[0];
+        contents = new ArrayList<>();
+        adapter=new ArticlesAdapter(UserFavoriteActivity.this, contents,0);
+        recyclerView.setAdapter(adapter);
+
+        getFavoriteContents();
     }
 
     //获取收藏列表
@@ -70,12 +77,13 @@ public class UserFavoriteActivity extends AppCompatActivity {
             super.handleMessage(message);
             switch (message.what) {
                 case 1:
-                    contents = message.getData().getParcelableArrayList("datalist");
+                    List<ArticleDetail> list = message.getData().getParcelableArrayList("datalist");
+                    contents.addAll(list);
                     //当内容为空时,创建空白页
                     if(contents.size()==0){
                         setContentView(R.layout.activity_blank);
                     }else {
-                        recyclerView.setAdapter(new ArticlesAdapter(UserFavoriteActivity.this, contents));
+                        adapter.notifyDataSetChanged();
                     }
                     break;
             }

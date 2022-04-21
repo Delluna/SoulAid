@@ -10,24 +10,37 @@
         android:id="@+id/icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_centerVertical="true"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_head_default"></ImageView>
 
-
     <TextView
         android:id="@+id/name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin"
         android:layout_toRightOf="@+id/icon"
-        android:layout_margin="@dimen/layout_margin"
+        android:layout_marginLeft="@dimen/layout_margin"
         android:text="@string/text_usr_name"
         android:textColor="@color/colorBlack"
         android:textSize="20sp"></TextView>
+
+    <TextView
+        android:id="@+id/tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/icon"
+        android:layout_marginLeft="@dimen/layout_margin"
+        android:layout_below="@+id/name"
+        android:layout_marginTop="@dimen/layout_margin"
+        android:text="咨询老师"
+        android:textColor="@color/colorBlack"
+        android:textSize="15sp"></TextView>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/name"
-        android:layout_marginTop="@dimen/layout_margin"
+        android:layout_below="@+id/tag"
+android:layout_marginTop="@dimen/layout_margin"
         android:background="@color/colorWhiteSmoke">
     </View>
 

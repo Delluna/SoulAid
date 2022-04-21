@@ -29,11 +29,13 @@ public class ChatsApater extends RecyclerView.Adapter {
     public static class ItemHolder extends RecyclerView.ViewHolder{
         public ImageView icon;
         public TextView name;
+        public TextView tag;
 
         public ItemHolder(@NonNull View itemView) {
             super(itemView);
             icon=itemView.findViewById(R.id.icon);
             name=itemView.findViewById(R.id.name);
+            tag=itemView.findViewById(R.id.tag);
         }
     }
 
@@ -58,8 +60,28 @@ public class ChatsApater extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         if(userType.equals("user")) {
             ((ItemHolder) holder).name.setText(teachers.get(position).getUsername());
+            //设置教师的专业领域
+            String speacialize="";
+            switch (teachers.get(position).getTag()){
+                case 0:
+                    speacialize="心理咨询老师";
+                case 1:
+                    speacialize="性格咨询老师";
+                    break;
+                case 2:
+                    speacialize="心理健康咨询老师";
+                    break;
+                case 3:
+                    speacialize="人际交往咨询老师";
+                    break;
+                case 4:
+                    speacialize="恋爱咨询老师";
+                    break;
+            }
+            ((ItemHolder) holder).tag.setText(speacialize);
         }else {
             ((ItemHolder) holder).name.setText(users.get(position).getUsername());
+            ((ItemHolder) holder).tag.setText("");
         }
 
         //设置点击事件

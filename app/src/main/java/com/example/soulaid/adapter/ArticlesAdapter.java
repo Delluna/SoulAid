@@ -27,13 +27,13 @@ import java.util.List;
 
 public class ArticlesAdapter extends RecyclerView.Adapter {
 
-    private int TYPE_ITEM=1;
-    private int TYPE_FOOT=-1;
+    private int TYPE_ITEM = 1;
+    private int TYPE_FOOT = -1;
 
     private Context context;
     private List<ArticleDetail> contents;
     private String username;
-    private boolean state=true;
+    private int from=1;  //from=0表示为用户收藏
 
     public static class ItemHolder extends RecyclerView.ViewHolder {
         public TextView name, title, content, time;
@@ -60,14 +60,15 @@ public class ArticlesAdapter extends RecyclerView.Adapter {
     }
 
     //构造方法
-    public ArticlesAdapter(Context context, List<ArticleDetail> contents) {
+    public ArticlesAdapter(Context context, List<ArticleDetail> contents, int from) {
         this.context = context;
         this.contents = contents;
+        this.from=from;
     }
 
     @Override
-    public int getItemViewType(int position){
-        if(position == getItemCount() -1){
+    public int getItemViewType(int position) {
+        if (position == getItemCount() - 1) {
             return TYPE_FOOT;
         }
         return TYPE_ITEM;
@@ -77,12 +78,11 @@ public class ArticlesAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType== TYPE_ITEM) {
+        if (viewType == TYPE_ITEM) {
             return new ItemHolder(LayoutInflater.from(this.context).inflate(R.layout.item_article, parent, false));
         } else {
             return new FootHolder(LayoutInflater.from(this.context).inflate(R.layout.item_foot, parent, false));
         }
-
     }
 
     //赋值
@@ -91,31 +91,31 @@ public class ArticlesAdapter extends RecyclerView.Adapter {
 
         if (holder instanceof ItemHolder) {
             if (contents == null) {
-                ((ItemHolder)holder).name.setText("名称");
-                ((ItemHolder)holder).title.setText("标题");
-                ((ItemHolder)holder).content.setText("内容");
-                ((ItemHolder)holder).time.setText("发布时间");
+                ((ItemHolder) holder).name.setText("名称");
+                ((ItemHolder) holder).title.setText("标题");
+                ((ItemHolder) holder).content.setText("内容");
+                ((ItemHolder) holder).time.setText("发布时间");
 
             } else {
 
                 username = IOUtil.getUserInfo(context)[0];
 
                 ArticleDetail articleDetail = contents.get(position);
-                ((ItemHolder)holder).name.setText(articleDetail.getName());
-                ((ItemHolder)holder).title.setText(articleDetail.getTitle());
-                ((ItemHolder)holder).content.setText(articleDetail.getContent());
-                ((ItemHolder)holder).time.setText(articleDetail.getDatetime().toString());
-                ((ItemHolder)holder).isFavorited = articleDetail.getIsFavorited();
+                ((ItemHolder) holder).name.setText(articleDetail.getName());
+                ((ItemHolder) holder).title.setText(articleDetail.getTitle());
+                ((ItemHolder) holder).content.setText(articleDetail.getContent());
+                ((ItemHolder) holder).time.setText(articleDetail.getDatetime().toString());
+                ((ItemHolder) holder).isFavorited = articleDetail.getIsFavorited();
 
-                if ( ((ItemHolder)holder).isFavorited == true) {
-                    Drawable background =context.getDrawable(R.drawable.ic_star);
-                    ((ItemHolder)holder).favorite.setBackground(background);
+                if (((ItemHolder) holder).isFavorited == true) {
+                    Drawable background = context.getDrawable(R.drawable.ic_star);
+                    ((ItemHolder) holder).favorite.setBackground(background);
                 }
 
-                final boolean isFavorited=((ItemHolder)holder).isFavorited;
-                final String title=((ItemHolder)holder).title.getText().toString();
+                final boolean isFavorited = ((ItemHolder) holder).isFavorited;
+                final String title = ((ItemHolder) holder).title.getText().toString();
                 //为item中的button添加点击事件
-                ((ItemHolder)holder).favorite.setOnClickListener(new View.OnClickListener() {
+                ((ItemHolder) holder).favorite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View view) {
                         new Thread(new Runnable() {
@@ -123,7 +123,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter {
                             public void run() {
                                 UserFavoriteDao userFavoriteDao = new UserFavoriteDao();
                                 Bundle bundle = new Bundle();
-                                if ( isFavorited == true) {
+                                if (isFavorited == true) {
                                     int state = userFavoriteDao.deleteFromFavorite(username, title);
                                     handler.sendEmptyMessage(state);
 
@@ -137,16 +137,14 @@ public class ArticlesAdapter extends RecyclerView.Adapter {
                 });
 
                 //为item整体添加点击事件
-                setOnClick(((ItemHolder)holder));
+                setOnClick(((ItemHolder) holder));
             }
-        }else {
-            if(state){
-                ((FootHolder)holder).textView.setText("正在加载中");
+        } else {
+            if(from==1){
+                ((FootHolder) holder).textView.setText("正在加载中");
             }else {
-                ((FootHolder)holder).textView.setText("无更多内容");
-            }
+            ((FootHolder) holder).textView.setText("无更多内容");}
         }
-
     }
 
     //获取数量
@@ -155,9 +153,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter {
         if (contents == null) {
             return 1;
         }
-        return contents.size()+1;//+1表示添加footViewHolder
+        return contents.size() + 1;//+1表示添加footViewHolder
     }
-
 
     //自定义接口实现功能：点击item进行跳转页面
     public void setOnClick(ArticlesAdapter.ItemHolder holder) {
@@ -176,13 +173,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter {
                 view.getContext().startActivity(intent);
             }
         });
-
     }
-
-    public void hasMore(boolean state) {
-        this.state = state;
-    }
-
 
     @SuppressLint("HandlerLeak")
     final Handler handler = new Handler() {

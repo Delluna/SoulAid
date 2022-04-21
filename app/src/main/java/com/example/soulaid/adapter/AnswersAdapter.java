@@ -19,6 +19,7 @@ public class AnswersAdapter extends RecyclerView.Adapter {
     private int question_position;
     private Context context;
     private List<String> answers;
+    private int times=0;
 
     public AnswersAdapter(Context context, List<String> answers,int question_position) {
         this.context = context;
@@ -52,15 +53,19 @@ public class AnswersAdapter extends RecyclerView.Adapter {
             public void onClick(View view) {
                 layoutPosition=holder1.getLayoutPosition();
                 notifyDataSetChanged();
-                ExerciseActivity.scores.set(question_position,position);
+                ExerciseActivity.scores.set(question_position,layoutPosition);
+                times++;
 
             }
         });
-        if (layoutPosition==position){
-            holder1.answer.setChecked(true);
-        }else {
-            holder1.answer.setChecked(false);
+        if(times!=0){
+            if (layoutPosition==position){
+                holder1.answer.setChecked(true);
+            }else {
+                holder1.answer.setChecked(false);
+            }
         }
+
     }
 
     @Override

@@ -29,12 +29,9 @@ public class ArticleFragment extends Fragment{
 
     private ArticlesAdapter adapter;
 
-
     //private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
-    private int reTimes = 0;//更新次数
-    private int number = 5;//每次更新文章的个数
     private List<ArticleDetail> Articles;
 
     @Override
@@ -50,6 +47,14 @@ public class ArticleFragment extends Fragment{
         recyclerView = view.findViewById(R.id.recycleView);
         //refreshLayout = view.findViewById(R.id.swipe_refresh);
 
+        //设置适配器
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(manager);
+        Articles=new ArrayList<>();
+        adapter=new ArticlesAdapter(getContext(), Articles,1);
+        recyclerView.setAdapter(adapter);
+
         getArticles();
 
         //上拉加载  https://www.jianshu.com/p/e8c2475da861
@@ -60,14 +65,7 @@ public class ArticleFragment extends Fragment{
                 //滑动到底部 recyclerView.canScrollVertically(1（-1）)为false表示已经滑到底（顶）部
                 if (!recyclerView.canScrollVertically(1)) {
                     //recyclerview滑动到底部,更新数据
-                    boolean state = getMoreArticles();
-                    if(state){
-                        adapter.hasMore(true);
-                    }
-                    else {
-                        adapter.hasMore(false);
-                        adapter.notifyDataSetChanged();
-                    }
+                    getArticles();
                 }
             }
         });
@@ -79,7 +77,7 @@ public class ArticleFragment extends Fragment{
             @Override
             public void run() {
                 ArticlesDao articlesDao = new ArticlesDao();
-                List<ArticleDetail> contents = articlesDao.getContents(number);
+                List<ArticleDetail> contents = articlesDao.getContents();
 
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList("datalist", (ArrayList<? extends Parcelable>) contents);
@@ -91,48 +89,15 @@ public class ArticleFragment extends Fragment{
         }).start();
     }
 
-    //加载更多数据
-    private boolean getMoreArticles(){
-        if(reTimes>=2) return false;
-        //加载更多数据
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ArticlesDao articlesDao = new ArticlesDao();
-                List<ArticleDetail> contents = articlesDao.getContents(number);
-
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("datalist2", (ArrayList<? extends Parcelable>) contents);
-                Message message = Message.obtain();
-                message.setData(bundle);
-                message.what = 2;
-                handler.sendMessage(message);
-
-            }
-        }).start();
-        return true;
-    }
-
     //获取到文章后为recycleview设置适配器
     @SuppressLint("HandlerLeak")
     final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
             super.handleMessage(message);
-            reTimes++;
             switch (message.what) {
                 case 1:
-                    Articles = message.getData().getParcelableArrayList("datalist");
-
-                    LinearLayoutManager manager = new LinearLayoutManager(getContext());
-                    manager.setOrientation(LinearLayoutManager.VERTICAL);
-
-                    recyclerView.setLayoutManager(manager);
-                    adapter=new ArticlesAdapter(getContext(), Articles);
-                    recyclerView.setAdapter(adapter);
-                    break;
-                case 2:
-                    List<ArticleDetail> list = message.getData().getParcelableArrayList("datalist2");
+                    List<ArticleDetail> list = message.getData().getParcelableArrayList("datalist");
                     Articles.addAll(list);
                     adapter.notifyDataSetChanged();
                     break;

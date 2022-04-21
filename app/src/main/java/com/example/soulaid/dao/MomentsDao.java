@@ -13,11 +13,13 @@ import java.util.List;
 
 public class MomentsDao {
 
+    private int number = 5;//每次取出moment的个数
+
     private DBUtil dbUtil;
     private Connection connection;
 
     //获取所有moment
-    public List<MomentDetail> getMoments(int number) {
+    public List<MomentDetail> getMoments() {
         List<MomentDetail> moments = new ArrayList<>();
         dbUtil = new DBUtil();
         connection = dbUtil.getCon();
@@ -101,7 +103,7 @@ public class MomentsDao {
         return state;
     }
 
-    public boolean addMoments(String username,String title,String content){
+    public boolean addMoment(String username,String title,String content){
         boolean state=false;
         dbUtil = new DBUtil();
         connection=dbUtil.getCon();
@@ -113,6 +115,30 @@ public class MomentsDao {
             preparedStatement.setString(1,username);
             preparedStatement.setString(2,title);
             preparedStatement.setString(3,content);
+
+            int resultNumber =preparedStatement.executeUpdate();
+            if(resultNumber==1){
+                state=true;
+            }
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            dbUtil.closeCon();
+        }
+        return state;
+    }
+
+    public boolean deleteMoment(int id){
+        boolean state=false;
+        dbUtil = new DBUtil();
+        connection=dbUtil.getCon();
+
+        String sql = "delete from moments where id = ?";
+
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
 
             int resultNumber =preparedStatement.executeUpdate();
             if(resultNumber==1){

@@ -51,22 +51,42 @@ public class UserIndexActivity extends AppCompatActivity implements BottomNaviga
         switch (menuItem.getItemId()) {
             case R.id.content:
                 switchFragment(cur, c);
-                cur = c;
                 return true;
             case R.id.socialTouch:
                 switchFragment(cur, s);
-                cur = s;
                 return true;
             case R.id.exercise:
                 switchFragment(cur, e);
-                cur = e;
                 return true;
             case R.id.userCenter:
                 switchFragment(cur, u);
-                cur = u;
                 return true;
         }
         return false;
+    }
+
+    public Fragment getC() {
+        return c;
+    }
+
+    public Fragment getS() {
+        return s;
+    }
+
+    public Fragment getE() {
+        return e;
+    }
+
+    public Fragment getU() {
+        return u;
+    }
+
+    public Fragment getCur() {
+        return cur;
+    }
+
+    public BottomNavigationView getNavView() {
+        return navView;
     }
 
     public void switchFragment(Fragment cur, Fragment to) {
@@ -76,5 +96,6 @@ public class UserIndexActivity extends AppCompatActivity implements BottomNaviga
         } else {
             fragmentTransaction.hide(cur).show(to).commit();
         }
+        this.cur=to;
     }
 }

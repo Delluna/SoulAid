@@ -21,6 +21,7 @@ import com.example.soulaid.R;
 import com.example.soulaid.dao.MomentsDao;
 import com.example.soulaid.entity.MomentDetail;
 import com.example.soulaid.user.ui.society.moments.MomentDetailActivity;
+import com.example.soulaid.util.IOUtil;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -31,6 +32,7 @@ public class MomentsAdapter extends RecyclerView.Adapter {
     private int TYPE_FOOT = -1;
     private boolean state=true;
 
+    private String username;
     private Context context;
     private List<MomentDetail> contents;
 
@@ -39,6 +41,7 @@ public class MomentsAdapter extends RecyclerView.Adapter {
         public int mid;//moment的id
         public TextView name, title, content, time,likedCount;
         public ImageView like;
+        public Button delete;
 
         public ItemHolder(@NonNull View itemView) {
             super(itemView);
@@ -48,6 +51,7 @@ public class MomentsAdapter extends RecyclerView.Adapter {
             time = itemView.findViewById(R.id.time);
             likedCount=itemView.findViewById(R.id.likedCount);
             like = itemView.findViewById(R.id.like);
+            delete=itemView.findViewById(R.id.delete);
         }
     }
 
@@ -63,6 +67,7 @@ public class MomentsAdapter extends RecyclerView.Adapter {
 
     //构造函数
     public MomentsAdapter(Context context, List<MomentDetail> contents) {
+        username= IOUtil.getUserInfo(context)[0];
         this.context = context;
         this.contents = contents;
     }
@@ -110,8 +115,9 @@ public class MomentsAdapter extends RecyclerView.Adapter {
                 ((ItemHolder) holder).content.setText(contents.get(position).getContent());
                 ((ItemHolder) holder).time.setText(contents.get(position).getDatetime().toString());
                 ((ItemHolder) holder).likedCount.setText(Integer.toString(contents.get(position).getLiked()));
+                ((ItemHolder) holder).delete.setVisibility(View.INVISIBLE);
 
-                //为button设置点击事件,目前还无法实现取消点赞
+                //为like设置点击事件,目前还无法实现取消点赞
                 ((ItemHolder) holder).like.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -135,9 +141,39 @@ public class MomentsAdapter extends RecyclerView.Adapter {
 
                     }
                 });
+
+                //若本moment为本用户所发，则可删除
+                if(username.equals(contents.get(position).getUname())){
+                    final int pos=position;
+                    ((ItemHolder) holder).delete.setVisibility(View.VISIBLE);
+                    ((ItemHolder) holder).delete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    MomentsDao momentsDao=new MomentsDao();
+                                    boolean state=momentsDao.deleteMoment(contents.get(pos).getId());
+                                    if(state){
+                                        Bundle bundle=new Bundle();
+                                        bundle.putInt("delete_pos",((ItemHolder) holder).getAdapterPosition());
+                                        Message message=Message.obtain();
+                                        message.setData(bundle);
+                                        message.what=3;
+                                        handler.sendMessage(message);
+                                    }else {
+                                        handler.sendEmptyMessage(2);
+                                    }
+                                }
+                            }).start();
+                        }
+                    });
+                }
+
+
+                //为整个item设置点击事件
+                this.setOnItemClick((ItemHolder)holder);
             }
-            //为整个item设置点击事件
-            this.setOnItemClick((ItemHolder)holder);
         }
 
     }
@@ -180,7 +216,6 @@ public class MomentsAdapter extends RecyclerView.Adapter {
         @Override
         public void handleMessage(Message message) {
             super.handleMessage(message);
-            //reTimes++;
             switch (message.what) {
                 //点赞失败
                 case 0:
@@ -191,6 +226,17 @@ public class MomentsAdapter extends RecyclerView.Adapter {
                     Toast.makeText(context,"点赞成功",Toast.LENGTH_SHORT).show();
                     int pos = message.getData().getInt("pos");
                     contents.get(pos).setLiked(contents.get(pos).getLiked()+1);
+                    notifyDataSetChanged();
+                    break;
+                    //删除成功
+                case 2:
+                    Toast.makeText(context,"删除失败",Toast.LENGTH_SHORT).show();
+                    break;
+                    //删除失败
+                case 3:
+                    Toast.makeText(context,"删除成功",Toast.LENGTH_SHORT).show();
+                    int delete_pos = message.getData().getInt("delete_pos");
+                    contents.remove(delete_pos);
                     notifyDataSetChanged();
                     break;
             }

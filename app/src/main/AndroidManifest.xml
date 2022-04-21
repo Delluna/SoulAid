@@ -12,10 +12,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".user.ui.exercise.AnalysisActivity"></activity>
+        <activity android:name=".user.ui.society.chats.CommentAddActivity"></activity>
+        <activity android:name=".user.ui.exercise.AnalysisActivity" />
         <activity android:name=".user.ui.exercise.DescriptionActivity" />
         <activity android:name=".user.ui.exercise.ExerciseActivity" />
-        <activity android:name=".user.ui.exercise.ExerciseListActivity"/>
+        <activity android:name=".user.ui.exercise.ExerciseListActivity" />
         <activity android:name=".user.ui.society.chats.ChatActivity" />
         <activity android:name=".user.ui.society.moments.MomentAddActivity" />
         <activity android:name=".user.ui.society.moments.MomentDetailActivity" />
@@ -37,7 +38,7 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".user.UserIndexActivity"
-            android:label="@string/title_activity_bottom_navigation"/>
+            android:label="@string/title_activity_bottom_navigation" />
         <activity
             android:name=".ArticleDetailActivity"
             android:parentActivityName=".user.UserIndexActivity" />
