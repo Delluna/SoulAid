@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".user.ui.society.chats.CommentAddActivity"></activity>
+        <activity android:name=".user.ui.society.moments.CommentAddActivity"></activity>
         <activity android:name=".user.ui.exercise.AnalysisActivity" />
         <activity android:name=".user.ui.exercise.DescriptionActivity" />
         <activity android:name=".user.ui.exercise.ExerciseActivity" />

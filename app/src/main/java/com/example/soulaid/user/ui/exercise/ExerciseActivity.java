@@ -24,11 +24,15 @@ import com.example.soulaid.entity.Scale;
 import com.example.soulaid.util.CalculateUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class ExerciseActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static  ArrayList scores=new ArrayList();
+    public static  ArrayList<Integer> scores=new ArrayList<>();
 
     private Scale scale;
     private List<Question> questions=new ArrayList<>();
@@ -139,12 +143,21 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
                 }
 
                 CalculateUtil calculateUtil=new CalculateUtil(scores);
-                int result=calculateUtil.calcuByName(scale.getName());
+
+                HashMap<String,Integer> result=calculateUtil.calcuByName(scale.getName());
 
                 Intent intent=new Intent(ExerciseActivity.this, AnalysisActivity.class);
                 Bundle bundle=new Bundle();
                 bundle.putSerializable("scale",scale);
-                bundle.putInt("score",result);
+
+                //bundle传递hashmap
+                Set<String> keySet=result.keySet();    //hashmap的keySet是乱序
+                Iterator<String> iter = keySet.iterator();
+                while (iter.hasNext()){
+                    String key = iter.next();
+                    bundle.putInt(key,result.get(key));
+                }
+
                 intent.putExtras(bundle);
                 startActivityForResult(intent,1);
                 break;

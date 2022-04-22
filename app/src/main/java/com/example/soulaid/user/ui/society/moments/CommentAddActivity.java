@@ -1,4 +1,4 @@
-package com.example.soulaid.user.ui.society.chats;
+package com.example.soulaid.user.ui.society.moments;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,7 +25,6 @@ public class CommentAddActivity extends AppCompatActivity implements View.OnClic
     private Button issue;
 
     private MomentDetail momentDetail;
-    private Comment comment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +40,6 @@ public class CommentAddActivity extends AppCompatActivity implements View.OnClic
         Bundle bundle =intent.getExtras();
         momentDetail=(MomentDetail) bundle.getSerializable("momentDetail");
 
-        comment=new Comment();
         issue.setOnClickListener(this);
     }
 
@@ -50,7 +48,7 @@ public class CommentAddActivity extends AppCompatActivity implements View.OnClic
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String str_title,str_content;
+                String str_content;
                 str_content=content.getText().toString();
                 CommentsDao commentsDao =new CommentsDao();
                 boolean state = commentsDao.addComment(username,momentDetail.getId(),str_content);

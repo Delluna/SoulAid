@@ -21,6 +21,7 @@ import com.example.soulaid.R;
 import com.example.soulaid.dao.MomentsDao;
 import com.example.soulaid.entity.MomentDetail;
 import com.example.soulaid.user.ui.society.moments.MomentDetailActivity;
+import com.example.soulaid.user.ui.society.moments.MomentsFragment;
 import com.example.soulaid.util.IOUtil;
 
 import java.sql.Timestamp;

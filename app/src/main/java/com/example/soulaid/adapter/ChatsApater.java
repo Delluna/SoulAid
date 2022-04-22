@@ -65,6 +65,7 @@ public class ChatsApater extends RecyclerView.Adapter {
             switch (teachers.get(position).getTag()){
                 case 0:
                     speacialize="心理咨询老师";
+                    break;
                 case 1:
                     speacialize="性格咨询老师";
                     break;

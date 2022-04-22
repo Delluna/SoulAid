@@ -53,7 +53,7 @@ public class AnswersAdapter extends RecyclerView.Adapter {
             public void onClick(View view) {
                 layoutPosition=holder1.getLayoutPosition();
                 notifyDataSetChanged();
-                ExerciseActivity.scores.set(question_position,layoutPosition);
+                ExerciseActivity.scores.set(question_position,layoutPosition);       //layoutPosition从0开始
                 times++;
 
             }

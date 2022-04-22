@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class UserMessage implements Serializable, Parcelable {
     private int id;
@@ -70,4 +71,14 @@ public class UserMessage implements Serializable, Parcelable {
             return new UserMessage[i];
         }
     };
+
+    @Override
+    public boolean equals(Object o){
+        if(this==o) return true;
+        if(o==null||getClass()!=o.getClass()) return false;
+        UserMessage userMessage = (UserMessage) o;
+        return Objects.equals(id,userMessage.id) &&
+                Objects.equals(username,userMessage.username) &&
+                Objects.equals(password,userMessage.password);
+    }
 }

@@ -14,6 +14,7 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.soulaid.R;
 import com.example.soulaid.dao.ArticlesDao;
@@ -87,6 +88,16 @@ public class ArticleFragment extends Fragment{
                 handler.sendMessage(message);
             }
         }).start();
+    }
+
+    public void setArticles(List<ArticleDetail> articles){
+        if(articles.size()==0){
+            Toast.makeText(getContext(),"找不到您想要的内容！",Toast.LENGTH_SHORT).show();
+        }else {
+            Articles.clear();
+            Articles.addAll(articles);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     //获取到文章后为recycleview设置适配器

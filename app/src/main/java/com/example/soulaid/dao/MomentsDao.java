@@ -13,20 +13,23 @@ import java.util.List;
 
 public class MomentsDao {
 
-    private int number = 5;//每次取出moment的个数
+    private int number=5 ;//每次取出moment的个数
 
     private DBUtil dbUtil;
     private Connection connection;
 
-    //获取所有moment
-    public List<MomentDetail> getMoments() {
+    public MomentsDao(){
+    }
+
+    //每次获取number个moment，position表示最后一次取出的moment的位置
+    public List<MomentDetail> getMoments(int position) {
         List<MomentDetail> moments = new ArrayList<>();
         dbUtil = new DBUtil();
         connection = dbUtil.getCon();
 
         MomentDetail momentDetail;
 
-        String sql = "select top "+number+" * from moments order by date desc";
+        String sql = "select * from moments order by date desc offset "+position+" rows fetch next "+number+" rows only";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

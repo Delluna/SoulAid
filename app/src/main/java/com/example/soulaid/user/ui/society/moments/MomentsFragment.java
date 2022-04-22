@@ -31,30 +31,37 @@ import java.util.List;
 
 
 public class MomentsFragment extends Fragment implements View.OnClickListener {
+    private int times;
     private View view;
     private Button issue;
     private RecyclerView recyclerView;
-    private List<MomentDetail> moments;
     private MomentsAdapter adapter;
+
+    private List<MomentDetail> moments;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_moments, container, false);
-
         init();
         return view;
     }
 
-
     private void init() {
-        getMoments();
+        times=0;
 
         issue = view.findViewById(R.id.issue);
         issue.setOnClickListener(this);  //通过点击按钮来发布内容
 
         recyclerView = view.findViewById(R.id.recycleView);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        recyclerView.setLayoutManager(manager);
+        moments = new ArrayList<>();
+        adapter = new MomentsAdapter(getContext(), moments);
+        recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -62,21 +69,11 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
                 //滑动到底部 recyclerView.canScrollVertically(1（-1）)为false表示已经滑到底（顶）部
                 if (!recyclerView.canScrollVertically(1)) {
                     //recyclerview滑动到底部,更新数据
-                    List<MomentDetail> moreMoments = getMoreMoments();
-                    if (moreMoments != null && moreMoments.size() != 0) {
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelableArrayList("more", (ArrayList<? extends MomentDetail>) moreMoments);
-                        Message message = Message.obtain();
-                        message.setData(bundle);
-                        message.what = 2;
-                        handler.sendMessage(message);
-                    } else {
-                        adapter.hasMore(false);
-                        adapter.notifyDataSetChanged();
-                    }
+                    getMoments();
                 }
             }
         });
+        getMoments();
     }
 
 
@@ -88,26 +85,19 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
                 startActivityForResult(intent, 1);
                 break;
         }
-
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //对于MomentAddActivity页面
-        if(requestCode==1&&resultCode==1){
-            if (data != null) {
-                Bundle bundle = data.getExtras();
-                MomentDetail momentDetail = new MomentDetail();
+        if (data != null) {
+            Bundle bundle = data.getExtras();
 
-                //添加数据 request==1 ,result==1
-                momentDetail = (MomentDetail) bundle.getSerializable("moment");
-
-                moments.add(0, momentDetail);
-                adapter.notifyDataSetChanged();
-            }
+            //添加数据 request==1 ,result==1
+            MomentDetail momentDetail = (MomentDetail) bundle.getSerializable("moment");
+            this.a();   //添加完数据也需要让times+1
+            moments.add(0, momentDetail);
+            adapter.notifyDataSetChanged();
         }
-
-
     }
 
     private void getMoments() {
@@ -115,28 +105,29 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void run() {
                 MomentsDao momentsDao = new MomentsDao();
-                moments = momentsDao.getMoments();
+                int c=times;
+                List<MomentDetail> moments = momentsDao.getMoments(c);
                 Message message = Message.obtain();
-                if (moments == null) {
-                    message.what = 0;
-                    handler.sendMessage(message);
-                } else {
+                if (moments != null && moments.size() != 0) {
                     Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList("moments", (ArrayList<? extends Parcelable>) moments);
-
+                    bundle.putParcelableArrayList("moments", (ArrayList<? extends MomentDetail>) moments);
                     message.setData(bundle);
                     message.what = 1;
                     handler.sendMessage(message);
+                } else {
+                    handler.sendEmptyMessage(0);
                 }
             }
         }).start();
     }
 
-    private List<MomentDetail> getMoreMoments() {
-        List<MomentDetail> moments = new ArrayList<>();
-        //todo
-
-        return moments;
+    public void a(){
+        times++;
+    }
+    public void b(){
+        if(times>0){
+            times--;
+        }
     }
 
     @SuppressLint("HandlerLeak")
@@ -144,24 +135,15 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
         @Override
         public void handleMessage(Message message) {
             super.handleMessage(message);
-            //reTimes++;
             switch (message.what) {
                 case 0:
-
+                    adapter.hasMore(false);
+                    adapter.notifyDataSetChanged();
                     break;
                 case 1:
-                    moments = message.getData().getParcelableArrayList("moments");
-
-                    LinearLayoutManager manager = new LinearLayoutManager(getContext());
-                    manager.setOrientation(LinearLayoutManager.VERTICAL);
-
-                    recyclerView.setLayoutManager(manager);
-                    adapter = new MomentsAdapter(getContext(), moments);
-                    recyclerView.setAdapter(adapter);
-                    break;
-                case 2:
-                    List<MomentDetail> momentDetails = message.getData().getParcelableArrayList("more");
-                    moments.addAll(momentDetails);
+                    List<MomentDetail> moments1 = message.getData().getParcelableArrayList("moments");
+                    times+=moments1.size();
+                    moments.addAll(moments1);
                     adapter.hasMore(true);
                     adapter.notifyDataSetChanged();
                     break;

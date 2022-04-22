@@ -22,7 +22,6 @@ public class MomentAddActivity extends AppCompatActivity implements View.OnClick
     private String username;
     private TextView title,content;
     private Button issue;
-    private MomentDetail momentDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +35,6 @@ public class MomentAddActivity extends AppCompatActivity implements View.OnClick
         title=findViewById(R.id.title);
         content=findViewById(R.id.content);
         issue=findViewById(R.id.issue);
-
-        momentDetail=new MomentDetail();
-
         issue.setOnClickListener(this);
     }
 

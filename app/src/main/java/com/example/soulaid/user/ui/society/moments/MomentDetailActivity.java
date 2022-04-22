@@ -13,21 +13,13 @@ import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.soulaid.R;
-import com.example.soulaid.adapter.ArticlesAdapter;
 import com.example.soulaid.adapter.CommentsAdapter;
-import com.example.soulaid.adapter.MomentsAdapter;
-import com.example.soulaid.dao.ArticlesDao;
 import com.example.soulaid.dao.CommentsDao;
-import com.example.soulaid.dao.MomentsDao;
-import com.example.soulaid.entity.ArticleDetail;
 import com.example.soulaid.entity.Comment;
 import com.example.soulaid.entity.MomentDetail;
-import com.example.soulaid.user.ui.society.chats.CommentAddActivity;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
