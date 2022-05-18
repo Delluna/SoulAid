@@ -2,6 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
+<!--    <VideoView-->
+<!--        android:id="@+id/video"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_margin="@dimen/layout_margin">-->
+<!--    </VideoView>-->
+        <ImageView
+            android:id="@+id/video"
+            android:layout_width="match_parent"
+            android:background="@color/colorBlack"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/layout_margin">
+        </ImageView>
+
     <TextView
         android:id="@+id/title"
         android:layout_height="wrap_content"
@@ -11,14 +28,5 @@
         android:textSize="20sp"
         android:textColor="@color/colorBlack"
         ></TextView>
-
-    <VideoView
-        android:id="@+id/video"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/layout_margin">
-    </VideoView>
-
 
 </LinearLayout>

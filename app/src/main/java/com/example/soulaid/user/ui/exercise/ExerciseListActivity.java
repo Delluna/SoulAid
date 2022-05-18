@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.example.soulaid.LoginActivity;
 import com.example.soulaid.R;
 import com.example.soulaid.adapter.ScalesAdapter;
-import com.example.soulaid.admin.AdminIndexActivity;
 import com.example.soulaid.dao.ExerciseListDao;
 import com.example.soulaid.entity.Scale;
 import com.example.soulaid.user.UserIndexActivity;

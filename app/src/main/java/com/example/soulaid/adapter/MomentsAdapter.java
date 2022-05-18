@@ -29,8 +29,8 @@ import java.util.List;
 
 public class MomentsAdapter extends RecyclerView.Adapter {
 
-    private int TYPE_ITEM = 1;
-    private int TYPE_FOOT = -1;
+    //private int TYPE_ITEM = 1;
+    //private int TYPE_FOOT = -1;
     private boolean state=true;
 
     private String username;
@@ -56,15 +56,15 @@ public class MomentsAdapter extends RecyclerView.Adapter {
         }
     }
 
-    //FootViewHolder
-    public static class FootHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
-
-        public FootHolder(@NonNull View itemView) {
-            super(itemView);
-            textView = itemView.findViewById(R.id.text);
-        }
-    }
+//    //FootViewHolder
+//    public static class FootHolder extends RecyclerView.ViewHolder {
+//        public TextView textView;
+//
+//        public FootHolder(@NonNull View itemView) {
+//            super(itemView);
+//            textView = itemView.findViewById(R.id.text);
+//        }
+//    }
 
     //构造函数
     public MomentsAdapter(Context context, List<MomentDetail> contents) {
@@ -73,36 +73,37 @@ public class MomentsAdapter extends RecyclerView.Adapter {
         this.contents = contents;
     }
 
-    //为每个view设置type
-    @Override
-    public int getItemViewType(int position) {
-        if (position == getItemCount() - 1) {
-            return TYPE_FOOT;
-        }
-        return TYPE_ITEM;
-    }
+//    //为每个view设置type
+//    @Override
+//    public int getItemViewType(int position) {
+//        if (position == getItemCount() - 1) {
+//            return TYPE_FOOT;
+//        }
+//        return TYPE_ITEM;
+//    }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == TYPE_ITEM) {
-            return new MomentsAdapter.ItemHolder(LayoutInflater.from(this.context).inflate(R.layout.item_moment, parent, false));
-        } else {
-            return new MomentsAdapter.FootHolder(LayoutInflater.from(this.context).inflate(R.layout.item_foot, parent, false));
-        }
+        return new MomentsAdapter.ItemHolder(LayoutInflater.from(this.context).inflate(R.layout.item_moment, parent, false));
+//        if (viewType == TYPE_ITEM) {
+//            return new MomentsAdapter.ItemHolder(LayoutInflater.from(this.context).inflate(R.layout.item_moment, parent, false));
+//        } else {
+//            return new MomentsAdapter.FootHolder(LayoutInflater.from(this.context).inflate(R.layout.item_foot, parent, false));
+//        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
 
-        if(holder instanceof FootHolder){
-            if(state){
-                ((FootHolder) holder).textView.setText("正在加载中");
-            }else {
-                ((FootHolder) holder).textView.setText("没有更多了");
-            }
-
-        }else {
+//        if(holder instanceof FootHolder){
+//            if(state){
+//                ((FootHolder) holder).textView.setText("正在加载中");
+//            }else {
+//                ((FootHolder) holder).textView.setText("没有更多了");
+//            }
+//
+//        }else {
             if (contents == null) {
                 ((ItemHolder) holder).name.setText("名称");
                 ((ItemHolder) holder).title.setText("标题");
@@ -175,16 +176,17 @@ public class MomentsAdapter extends RecyclerView.Adapter {
                 //为整个item设置点击事件
                 this.setOnItemClick((ItemHolder)holder);
             }
-        }
+        //}
 
     }
 
     @Override
     public int getItemCount() {
-        if (contents == null) {
-            return 1;
-        }
-        return contents.size()+1;  //+1表示添加footViewHolder
+//        if (contents == null) {
+//            return 1;
+//        }
+//        return contents.size()+1;  //+1表示添加footViewHolder
+        return contents.size();
     }
 
     private void setOnItemClick(final ItemHolder itemHolder){

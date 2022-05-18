@@ -42,13 +42,54 @@ public class MessageDao {
     }
 
 
-    //注册账户,return 1表示注册成功，return 0表示注册失败, return -1表示用户名已存在，return -2表示两次密码输入不一致
-    public int register(String tableName, String name, String pwd, String pwd2) {
+//    //注册账户,return 1表示注册成功，return 0表示注册失败, return -1表示用户名已存在，return -2表示两次密码输入不一致
+//    public int register(String tableName, String name, String pwd, String pwd2) {
+//        if (name.equals("") || pwd.equals("") || pwd2.equals("")) return 0;
+//        if (!pwd.equals(pwd2)) return -2;
+//
+//        String check = "select * from " + tableName + " where username = ?";
+//        String sql = "insert into " + tableName + " (username,password) values (?,?)";
+//
+//        DBUtil dbUtil = new DBUtil();
+//        Connection connection = dbUtil.getCon();
+//
+//        try {
+//            //检测是否用户名重复
+//            PreparedStatement pS = connection.prepareStatement(check);
+//            pS.setString(1, name);
+//            ResultSet rS = pS.executeQuery();
+//            if (rS.next()) {
+//                rS.close();
+//                pS.close();
+//                return -1;
+//            }
+//
+//            //插入用户信息
+//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setString(1, name);
+//            preparedStatement.setString(2, pwd);
+//
+//            int value = preparedStatement.executeUpdate();
+//            if (value > 0) {
+//                preparedStatement.close();
+//                return 1;
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            dbUtil.closeCon();
+//        }
+//        return 0;
+//    }
+
+
+    //注册账户,return 1表示已添加到注册审核表，return 0表示注册失败, return -1表示用户名已存在，return -2表示两次密码输入不一致
+    public int register(String tableName, String name, String pwd, String pwd2,String userType) {
         if (name.equals("") || pwd.equals("") || pwd2.equals("")) return 0;
         if (!pwd.equals(pwd2)) return -2;
 
         String check = "select * from " + tableName + " where username = ?";
-        String sql = "insert into " + tableName + " (username,password) values (?,?)";
+        String sql = "insert into register (username,password,userType) values (?,?,?)";
 
         DBUtil dbUtil = new DBUtil();
         Connection connection = dbUtil.getCon();
@@ -68,6 +109,7 @@ public class MessageDao {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, pwd);
+            preparedStatement.setString(3,userType);
 
             int value = preparedStatement.executeUpdate();
             if (value > 0) {

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.soulaid.admin.AdminIndexActivity;
 import com.example.soulaid.user.UserIndexActivity;
 import com.example.soulaid.util.IOUtil;
 
@@ -21,11 +20,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //判断之前是否登陆过，若登陆过直接跳转到首页
         String type = IOUtil.getUserType(MainActivity.this);
         switch (type) {
-            case "admin":
-                Intent intent = new Intent(MainActivity.this, AdminIndexActivity.class);
-                startActivity(intent);
-                MainActivity.this.finish();
-                break;
+//            case "admin":
+//                Intent intent = new Intent(MainActivity.this, AdminIndexActivity.class);
+//                startActivity(intent);
+//                MainActivity.this.finish();
+//                break;
             case "teacher":
                 Intent intent2 = new Intent(MainActivity.this, UserIndexActivity.class);
                 startActivity(intent2);

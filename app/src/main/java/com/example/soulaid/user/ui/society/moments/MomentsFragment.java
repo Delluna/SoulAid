@@ -31,7 +31,7 @@ import java.util.List;
 
 
 public class MomentsFragment extends Fragment implements View.OnClickListener {
-    private int times;
+    //private int times;
     private View view;
     private Button issue;
     private RecyclerView recyclerView;
@@ -49,7 +49,7 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void init() {
-        times=0;
+        //times=0;
 
         issue = view.findViewById(R.id.issue);
         issue.setOnClickListener(this);  //通过点击按钮来发布内容
@@ -62,17 +62,17 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
         moments = new ArrayList<>();
         adapter = new MomentsAdapter(getContext(), moments);
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                //滑动到底部 recyclerView.canScrollVertically(1（-1）)为false表示已经滑到底（顶）部
-                if (!recyclerView.canScrollVertically(1)) {
-                    //recyclerview滑动到底部,更新数据
-                    getMoments();
-                }
-            }
-        });
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                //滑动到底部 recyclerView.canScrollVertically(1（-1）)为false表示已经滑到底（顶）部
+//                if (!recyclerView.canScrollVertically(1)) {
+//                    //recyclerview滑动到底部,更新数据
+//                    getMoments();
+//                }
+//            }
+//        });
         getMoments();
     }
 
@@ -94,7 +94,7 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
 
             //添加数据 request==1 ,result==1
             MomentDetail momentDetail = (MomentDetail) bundle.getSerializable("moment");
-            this.a();   //添加完数据也需要让times+1
+            //this.a();   //添加完数据也需要让times+1
             moments.add(0, momentDetail);
             adapter.notifyDataSetChanged();
         }
@@ -105,8 +105,8 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void run() {
                 MomentsDao momentsDao = new MomentsDao();
-                int c=times;
-                List<MomentDetail> moments = momentsDao.getMoments(c);
+                //int c=times;
+                List<MomentDetail> moments = momentsDao.getMoments();
                 Message message = Message.obtain();
                 if (moments != null && moments.size() != 0) {
                     Bundle bundle = new Bundle();
@@ -121,14 +121,14 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
         }).start();
     }
 
-    public void a(){
-        times++;
-    }
-    public void b(){
-        if(times>0){
-            times--;
-        }
-    }
+//    public void a(){
+//        times++;
+//    }
+//    public void b(){
+//        if(times>0){
+//            times--;
+//        }
+//    }
 
     @SuppressLint("HandlerLeak")
     final Handler handler = new Handler() {
@@ -142,9 +142,9 @@ public class MomentsFragment extends Fragment implements View.OnClickListener {
                     break;
                 case 1:
                     List<MomentDetail> moments1 = message.getData().getParcelableArrayList("moments");
-                    times+=moments1.size();
+                    //times+=moments1.size();
                     moments.addAll(moments1);
-                    adapter.hasMore(true);
+                    //adapter.hasMore(true);
                     adapter.notifyDataSetChanged();
                     break;
             }

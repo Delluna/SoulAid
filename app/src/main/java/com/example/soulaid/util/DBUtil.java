@@ -1,12 +1,15 @@
 package com.example.soulaid.util;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBUtil {
 
-    public static String ip="192.168.0.171";
+    public static String ip="192.168.0.101";
     private String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private String dbURL = "jdbc:jtds:sqlserver://"+ip+":1433;DatabaseName=DB_SOULAID";//数据库连接url
     private String dbName = "SoulAid";//数据库用户名
@@ -14,6 +17,14 @@ public class DBUtil {
     private Connection con = null;
 
     public DBUtil() {
+//        try {
+//            InetAddress ip4 = Inet4Address.getLocalHost();
+//            ip=ip4.toString();
+//            System.out.println(ip);
+//
+//        } catch (UnknownHostException e) {
+//            e.printStackTrace();
+//        }
     }
 
     //数据库连接

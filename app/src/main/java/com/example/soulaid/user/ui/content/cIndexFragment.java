@@ -122,16 +122,18 @@ public class cIndexFragment extends Fragment implements BottomNavigationView.OnN
                 break;
             case R.id.search:
                 final String key = text.getText().toString();
-                if (key.equals("")) {
-                    Toast.makeText(getContext(), "请输入搜索关键字", Toast.LENGTH_SHORT).show();
-                } else {
                     if (cur == fa) {
                         //搜索文章
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 ArticlesDao articlesDao = new ArticlesDao();
-                                List<ArticleDetail> articles = articlesDao.getArticlesWithKey(key);
+                                List<ArticleDetail> articles;
+                                if (key.equals("")){
+                                    articles = articlesDao.getContents();
+                                }else {
+                                    articles = articlesDao.getArticlesWithKey(key);
+                                }
                                 Bundle bundle = new Bundle();
                                 bundle.putParcelableArrayList("articles", (ArrayList<? extends Parcelable>) articles);
                                 Message message = Message.obtain();
@@ -147,7 +149,11 @@ public class cIndexFragment extends Fragment implements BottomNavigationView.OnN
                             @Override
                             public void run() {
                                 VideosDao videosDao = new VideosDao();
-                                List<Video> videos = videosDao.getVideosWithKey(key);
+                                List<Video> videos;
+                                if (key.equals("")){
+                                    videos=videosDao.getVideos();}
+                                else {
+                                    videos  = videosDao.getVideosWithKey(key);}
                                 Bundle bundle = new Bundle();
                                 bundle.putParcelableArrayList("videos", (ArrayList<? extends Parcelable>) videos);
                                 Message message = Message.obtain();
@@ -157,7 +163,6 @@ public class cIndexFragment extends Fragment implements BottomNavigationView.OnN
                             }
                         }).start();
                     }
-                }
                 break;
         }
     }

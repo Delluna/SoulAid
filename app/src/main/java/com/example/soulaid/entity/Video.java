@@ -3,6 +3,8 @@ package com.example.soulaid.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.soulaid.util.DBUtil;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -52,8 +54,10 @@ public class Video implements Serializable, Parcelable {
         this.title = title;
     }
 
+    //将localhost改为本机ip地址
     public String getUrl() {
-        return url;
+        String r_url = url.replace("localhost", DBUtil.ip);
+        return r_url;
     }
 
     public void setUrl(String url) {

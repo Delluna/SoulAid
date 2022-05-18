@@ -22,15 +22,15 @@ public class MomentsDao {
     }
 
     //每次获取number个moment，position表示最后一次取出的moment的位置
-    public List<MomentDetail> getMoments(int position) {
+    public List<MomentDetail> getMoments() {
         List<MomentDetail> moments = new ArrayList<>();
         dbUtil = new DBUtil();
         connection = dbUtil.getCon();
 
         MomentDetail momentDetail;
 
-        String sql = "select * from moments order by date desc offset "+position+" rows fetch next "+number+" rows only";
-
+//        String sql = "select * from moments order by date desc offset "+position+" rows fetch next "+number+" rows only";
+        String sql = "select * from moments";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();

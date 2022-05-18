@@ -18,7 +18,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.soulaid.admin.AdminIndexActivity;
 import com.example.soulaid.dao.MessageDao;
 import com.example.soulaid.user.UserIndexActivity;
 import com.example.soulaid.util.IOUtil;
@@ -61,10 +60,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (radioGroup.getCheckedRadioButtonId()) {
-            case R.id.admin:
-                tableName = "admin_message";
-                type = "admin";
-                break;
+//            case R.id.admin:
+//                tableName = "admin_message";
+//                type = "admin";
+//                break;
             case R.id.teacher:
                 tableName = "teacher_message";
                 type = "teacher";
@@ -123,9 +122,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
                 Intent intent = null;
                 switch (type) {
-                    case "admin":
-                        intent = new Intent(LoginActivity.this, AdminIndexActivity.class);
-                        break;
+//                    case "admin":
+//                        intent = new Intent(LoginActivity.this, AdminIndexActivity.class);
+//                        break;
                     case "teacher":
                         intent = new Intent(LoginActivity.this, UserIndexActivity.class);
                         break;

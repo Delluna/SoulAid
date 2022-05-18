@@ -23,7 +23,7 @@ public class RegisterActivity extends AppCompatActivity implements RadioGroup.On
     private View titlebar;
     private TextView titlename;
     private ImageView exit;
-    private String tableName;
+    private String tableName,userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +51,16 @@ public class RegisterActivity extends AppCompatActivity implements RadioGroup.On
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (radioGroup.getCheckedRadioButtonId()) {
-            case R.id.admin:
-                tableName = "admin_message";
-                break;
+//            case R.id.admin:
+//                tableName = "admin_message";
+//                break;
             case R.id.teacher:
                 tableName = "teacher_message";
+                userType="teacher";
                 break;
             case R.id.user:
                 tableName = "user_message";
+                userType="user";
                 break;
         }
     }
@@ -76,7 +78,8 @@ public class RegisterActivity extends AppCompatActivity implements RadioGroup.On
                         pwd2 = password2.getText().toString();
 
                         MessageDao MessageDao = new MessageDao();
-                        int state = MessageDao.register(tableName, name, pwd, pwd2);
+                        int state = MessageDao.register(tableName, name, pwd, pwd2,userType);
+
                         handler.sendEmptyMessage(state);
                     }
                 }).start();
@@ -92,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity implements RadioGroup.On
         @Override
         public void handleMessage(Message message) {
             if (message.what == 1) {
-                Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "等待审核", Toast.LENGTH_SHORT).show();
                 finish(); //退出当前activity
             } else if (message.what == -1) {
                 Toast.makeText(getApplicationContext(), "用户名已存在！", Toast.LENGTH_SHORT).show();
