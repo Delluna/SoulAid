@@ -32,7 +32,7 @@ import java.util.Set;
 
 public class ExerciseActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static  ArrayList<Integer> scores=new ArrayList<>();
+    public static ArrayList<Integer> scores=new ArrayList<>();
 
     private Scale scale;
     private List<Question> questions=new ArrayList<>();
@@ -101,6 +101,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
                     recyclerView.setItemViewCacheSize(200);
 
                     //初始化
+                    scores.clear();
                     for(int i=0;i<questions.size();i++){
                         scores.add(-1);
                     }
@@ -150,6 +151,8 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
                 Bundle bundle=new Bundle();
                 bundle.putSerializable("scale",scale);
 
+                bundle.putInt("questionNumber",scores.size());
+
                 //bundle传递hashmap
                 Set<String> keySet=result.keySet();    //hashmap的keySet是乱序
                 Iterator<String> iter = keySet.iterator();
@@ -160,6 +163,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
                 intent.putExtras(bundle);
                 startActivityForResult(intent,1);
+
                 break;
         }
     }

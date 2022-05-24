@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Set;
 
 public class AnalysisActivity extends AppCompatActivity {
+
+    private int questionNumber;
     private Scale scale;
     private TextView name,analysis;
     private LineChart chart;
@@ -55,12 +57,14 @@ public class AnalysisActivity extends AppCompatActivity {
         //获取scale
         scale = (Scale) bundle.getSerializable("scale");
 
+        questionNumber=bundle.getInt("questionNumber");
+
         //获取result
         Set<String> keySet=bundle.keySet();  //问题出这在里，bundle.keySet()中第一行为"scale"  解决方法:增加if语句判断（第42行）
         Iterator<String> iter = keySet.iterator();
         while (iter.hasNext()){
             String key = iter.next();
-            if(!key.equals("scale")){
+            if(!key.equals("scale")&&!key.equals("questionNumber")){
                 result.put(key,bundle.getInt(key));
             }
 
@@ -116,11 +120,22 @@ public class AnalysisActivity extends AppCompatActivity {
         });
 
         //修改y轴
+        float min;
+        float max;
+
+        if(scale.getName().equals("人际关系综合诊断量表")){   //人际关系综合诊断表从0开始，其他从一开始
+            min=0f;
+            max=((float) questionNumber*(scale.getAnswerNumber()-1)/result.size());
+        }else {
+            min=((float) questionNumber/result.size());
+            max=((float) questionNumber*(scale.getAnswerNumber())/result.size());
+        }
+
         YAxis yAxisRight=chart.getAxisRight();
         YAxis yAxisLeft=chart.getAxisLeft();
         yAxisRight.setEnabled(false);  //隐藏右侧y轴
-        yAxisLeft.setAxisMinimum(0f); //设置左侧y轴最小值
-        yAxisLeft.setAxisMaximum((float)scale.getAnswerNumber()); //设置左侧y轴最打大值
+        yAxisLeft.setAxisMinimum(min); //设置左侧y轴最小值
+        yAxisLeft.setAxisMaximum(max); //设置左侧y轴最大值
 
         //隐藏描述
         Description description=new Description();

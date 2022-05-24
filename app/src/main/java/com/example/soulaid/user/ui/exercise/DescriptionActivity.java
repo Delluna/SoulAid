@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.example.soulaid.R;
 import com.example.soulaid.entity.Scale;
 
-public class DescriptionActivity extends AppCompatActivity {
+public class  DescriptionActivity extends AppCompatActivity {
     private Scale scale;
     private TextView name,description;
     private Button begin;

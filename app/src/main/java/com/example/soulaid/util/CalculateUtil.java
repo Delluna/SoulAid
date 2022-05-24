@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class CalculateUtil {
 
-    private ArrayList<Integer> scores;  //存放原始数据   //layoutPosition从0开始，若规则从1开始，则需要修改scores再计算
+    private ArrayList<Integer> scores;  //存放原始数据   //layoutPosition从0开始，若规则从1开始，则需要修改scores(amendment(value))再计算
     private HashMap<String,Integer> result;  //存放结果
 
     //构造方法
@@ -248,6 +248,8 @@ public class CalculateUtil {
 
     private void calcuByECR() {
         //分数从1-7
+        amendment(1);
+
         int a,b;
         a=b=0;
 
